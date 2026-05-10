@@ -19,15 +19,18 @@ export function AboutSection() {
         >
           <div className="space-y-2">
             <h3 className="text-sm font-bold tracking-widest text-primary uppercase">About</h3>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">A bit about me</h2>
+            {/* heading removed as requested */}
           </div>
           
           <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
             <p>
-              I'm a B.Tech CSE (Data Science) student at Galgotias University, passionate about building software that solves real problems. My focus lies at the intersection of clean design and scalable architecture.
+              I’m Siddh Tyagi, a B.Tech CSE (Data Science) student at Galgotias University passionate about building modern, scalable, and impactful digital experiences. I enjoy transforming ideas into real-world applications through clean code, problem solving, and intuitive design.
             </p>
             <p>
-              Currently exploring AI-powered applications and modern web technologies. I believe in writing code that is not just functional, but maintainable and elegant.
+              Currently focused on Full Stack Development, Data Structures &amp; Algorithms, and AI-powered applications. I love exploring new technologies, participating in hackathons, and creating projects that combine innovation with practical utility.
+            </p>
+            <p>
+              Beyond coding, I’m continuously improving my problem-solving mindset, learning system design concepts, and working towards becoming a high-impact software engineer.
             </p>
           </div>
 

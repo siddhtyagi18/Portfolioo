@@ -22,10 +22,16 @@ export function HeroSection() {
   const [particles, setParticles] = useState<{id: number, x: number, y: number, size: number, duration: number, delay: number}[]>([])
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    setParticles(generateParticles(20)) // Fewer, more subtle particles
+    const mq = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null
+    const reduced = mq ? mq.matches : false
+    setPrefersReducedMotion(reduced)
+
+    const count = typeof window !== 'undefined' && window.innerWidth < 640 ? 8 : 20
+    setParticles(reduced ? [] : generateParticles(count)) // fewer particles on mobile or disabled for reduced motion
   }, [])
 
   const particleColor = mounted && resolvedTheme === 'light' ? 'bg-purple-500/10' : 'bg-purple-500/30'
@@ -33,34 +39,64 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Colorful blurred blobs for depth (motion-enabled) */}
+      <motion.div
+        className="blob blob-1 z-0"
+        aria-hidden
+        animate={{ x: [0, 30, 0], y: [0, -10, 0], rotate: [0, 2, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="blob blob-2 z-0"
+        aria-hidden
+        animate={{ x: [0, -30, 0], y: [0, 10, 0], rotate: [0, -2, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* subtle flowing lines and mesh */}
+      <div className="flow-lines z-0" aria-hidden />
+      <div className="mesh-svg z-0" aria-hidden>
+        <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" className="mesh-anim">
+          <g>
+            <path className="mesh-path" d="M0 120 C150 200 350 40 500 120 C650 200 800 80 1000 120" />
+            <path className="mesh-path" d="M0 220 C150 300 350 140 500 220 C650 300 800 180 1000 220" transform="translate(-80,40)" />
+            <path className="mesh-path" d="M0 320 C150 400 350 240 500 320 C650 400 800 280 1000 320" transform="translate(-160,80)" />
+          </g>
+        </svg>
+      </div>
+
       <div className="bg-overlay z-0" />
       <div className="stars-bg z-0" />
       
       {/* Subtle Dynamic Particles */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className={`absolute rounded-full ${particleColor}`}
-            style={{
-              width: particle.size,
-              height: particle.size,
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-            }}
-            animate={{
-              y: [0, -50, 0],
-              x: [0, Math.random() * 30 - 15, 0],
-              opacity: [0, 0.5, 0],
-            }}
-            transition={{
-              duration: particle.duration,
-              delay: particle.delay,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
+        {!prefersReducedMotion && (
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            {particles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                className={`absolute rounded-full ${particleColor}`}
+                style={{
+                  width: particle.size,
+                  height: particle.size,
+                  left: `${particle.x}%`,
+                  top: `${particle.y}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  x: [0, Math.random() * 20 - 10, 0],
+                  opacity: [0, 0.45, 0],
+                }}
+                transition={{
+                  duration: particle.duration,
+                  delay: particle.delay,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
       
       {/* Abstract Wireframe Globe Background */}
@@ -122,7 +158,7 @@ export function HeroSection() {
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <Button asChild size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_40px_-10px_rgba(147,51,234,0.4)] dark:shadow-[0_0_40px_-10px_rgba(147,51,234,0.8)] transition-all hover:scale-105">
-            <a href="/SIDDH's Resume.pdf" target="_blank" rel="noopener noreferrer">
+            <a href="/Siddh_Tyagi_Resume.pdf" download="Siddh_Tyagi_Resume.pdf" rel="noopener noreferrer">
               <Download className="mr-2 h-4 w-4" /> Download Resume
             </a>
           </Button>
@@ -133,16 +169,7 @@ export function HeroSection() {
           </Button>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground text-xs tracking-widest uppercase cursor-pointer hover:text-foreground transition-colors"
-          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          SCROLL
-          <ArrowDown className="h-4 w-4 animate-bounce" />
-        </motion.div>
+        {/* Scroll indicator removed for a cleaner hero */}
       </div>
     </section>
   )

@@ -80,8 +80,106 @@
 }
 
 .glass-card {
-  @apply bg-white/80 dark:bg-[#0a0a0c]/80 backdrop-blur-md border border-black/5 dark:border-white/5 rounded-2xl shadow-xl transition-all duration-300;
+  /* Use theme-aware subtle card background to keep contrast in light/dark */
+  /* Light: solid white with subtle tint for readability; Dark: kept darker */
+  background-color: rgba(255,255,255,0.92);
+  background-image: linear-gradient(180deg, rgba(243,245,255,0.6), rgba(255,250,255,0.75));
+  @apply dark:bg-[#0a0a0c]/80 backdrop-blur-md border border-border rounded-2xl shadow-xl transition-all duration-300;
 }
+
+/* Animated colorful blobs for hero */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  pointer-events: none;
+  transform: translate3d(0,0,0);
+}
+
+.blob-1 {
+  width: 520px;
+  height: 520px;
+  left: -10%;
+  top: -20%;
+  background: radial-gradient(circle at 30% 30%, rgba(147,51,234,0.45), transparent 35%), radial-gradient(circle at 70% 70%, rgba(99,102,241,0.35), transparent 40%);
+  animation: float-blob 8s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 420px;
+  height: 420px;
+  right: -8%;
+  bottom: -10%;
+  background: radial-gradient(circle at 40% 40%, rgba(236,72,153,0.40), transparent 35%), radial-gradient(circle at 65% 65%, rgba(59,130,246,0.30), transparent 45%);
+  animation: float-blob 10s ease-in-out infinite reverse;
+}
+
+@keyframes float-blob {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.03); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Enhanced card gradient accent and hover glow */
+.card-accent {
+  background-image: linear-gradient(135deg, rgba(147,51,234,0.06), rgba(236,72,153,0.05));
+  border: 1px solid rgba(147,51,234,0.06);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 50px rgba(99,102,241,0.08), 0 8px 24px rgba(236,72,153,0.05);
+}
+
+/* Skill badge animated gradient */
+.skill-badge {
+  transition: transform 0.25s, background 0.3s, color 0.25s, box-shadow 0.2s;
+  background-image: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  box-shadow: 0 4px 10px rgba(16,24,40,0.03);
+}
+
+.skill-badge:hover {
+  transform: translateY(-4px) scale(1.02);
+  background-image: linear-gradient(90deg, rgba(147,51,234,0.08), rgba(236,72,153,0.08));
+  box-shadow: 0 10px 30px rgba(147,51,234,0.06);
+}
+
+/* Subtle flowing lines overlay to add motion */
+.flow-lines {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.01) 100%);
+  background-size: 200% 100%;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  animation: flow-bg 18s linear infinite;
+}
+
+@keyframes flow-bg {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* SVG mesh subtle rotation */
+.mesh-svg { position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.26; }
+.mesh-svg svg { width: 100%; height: 100%; }
+.mesh-path { stroke: rgba(147,51,234,0.16); stroke-width: 1.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.mesh-anim { animation: rotate-mesh 40s linear infinite; transform-origin: center; }
+@keyframes rotate-mesh { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(12deg) scale(1.02); } 100% { transform: rotate(0deg) scale(1); } }
+
+/* Dark mode tweaks for better contrast */
+.dark .mesh-path { stroke: rgba(147,51,234,0.22); }
+.dark .mesh-svg { opacity: 0.18; }
+.dark .flow-lines { opacity: 0.04; }
+.dark .blob { filter: blur(64px); opacity: 0.5; }
+.dark .blob-1 { background: radial-gradient(circle at 30% 30%, rgba(147,51,234,0.18), transparent 35%), radial-gradient(circle at 70% 70%, rgba(99,102,241,0.14), transparent 40%); }
+.dark .blob-2 { background: radial-gradient(circle at 40% 40%, rgba(236,72,153,0.14), transparent 35%), radial-gradient(circle at 65% 65%, rgba(59,130,246,0.12), transparent 45%); }
+.dark .bg-overlay { background-image: radial-gradient(circle at 15% 50%, rgba(147,51,234,0.02), transparent 25%), radial-gradient(circle at 85% 30%, rgba(147,51,234,0.02), transparent 25%); }
+
+/* make glass-card borders slightly brighter in dark for separation */
+.dark .glass-card { border-color: rgba(255,255,255,0.06); }
 
 /* Subtle background overlay */
 .bg-overlay {

@@ -53,7 +53,7 @@ export function ProjectsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full flex flex-col overflow-hidden group bg-background border-black/10 dark:border-white/10 shadow-sm rounded-2xl">
+              <Card className="h-full flex flex-col overflow-hidden group bg-white/95 dark:bg-[#0b0b0d]/80 border border-border dark:border-white/5 shadow-sm rounded-2xl text-foreground">
                 <div className="relative h-56 w-full overflow-hidden bg-muted border-b border-black/5 dark:border-white/5">
                   <Image
                     src={project.image}
@@ -61,6 +61,7 @@ export function ProjectsSection() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <CardHeader className="pt-6">
                   <CardTitle className="text-xl font-bold">{project.title}</CardTitle>

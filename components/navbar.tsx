@@ -64,9 +64,11 @@ export function Navbar() {
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
           )}
-          <Button variant="outline" className="rounded-full border-black/10 dark:border-white/10 bg-transparent hover:bg-black/5 dark:hover:bg-white/5 hidden md:flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Resume
+          <Button asChild variant="outline" className="rounded-full border-black/10 dark:border-white/10 bg-transparent hover:bg-black/5 dark:hover:bg-white/5 hidden md:flex items-center gap-2">
+            <a href="/Siddh_Tyagi_Resume.pdf" download="Siddh_Tyagi_Resume.pdf" rel="noopener noreferrer">
+              <Download className="h-4 w-4" />
+              Resume
+            </a>
           </Button>
         </div>
       </div>

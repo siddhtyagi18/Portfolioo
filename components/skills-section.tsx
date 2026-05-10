@@ -75,7 +75,7 @@ export function SkillsSection() {
         transition={{ duration: 0.5 }}
       >
         <div className="text-center mb-16 space-y-4">
-          <h3 className="text-sm font-bold tracking-widest text-cyan-400 uppercase">SKILLS</h3>
+          <h3 className="text-sm font-bold tracking-widest text-primary uppercase">SKILLS</h3>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">What I work with</h2>
         </div>
 
@@ -88,13 +88,13 @@ export function SkillsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               whileHover={{ scale: 1.02, y: -5 }}
-              className="glass-card p-8 flex flex-col h-full bg-[#0a0a0f] dark:bg-[#0a0a0f] border-[#1f1f2e] transition-all duration-300 shadow-xl hover:shadow-cyan-500/10 group"
+              className="glass-card card-accent p-8 flex flex-col h-full transition-all duration-300 shadow-xl hover:shadow-cyan-500/10 group"
             >
               <div className="flex items-center gap-4 mb-8">
                 <div className="group-hover:rotate-12 transition-transform duration-300">
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold text-cyan-400">{category.title}</h3>
+                <h3 className="text-xl font-bold text-primary">{category.title}</h3>
               </div>
               
               <div className="flex flex-wrap gap-3 mt-auto">
@@ -102,7 +102,7 @@ export function SkillsSection() {
                   <Badge 
                     key={skill.name} 
                     variant="outline" 
-                    className="bg-[#13131f] border border-white/5 text-gray-300 text-sm py-2 px-4 font-normal rounded-full hover:bg-[#1c1c2e] hover:border-white/10 transition-colors flex items-center shadow-inner"
+                    className="skill-badge bg-background/5 dark:bg-[#13131f] border border-input text-foreground text-sm py-2 px-4 font-normal rounded-full hover:bg-background/10 dark:hover:bg-[#1c1c2e] hover:border-white/10 transition-colors flex items-center shadow-inner"
                   >
                     {skill.icon}
                     {skill.name}
@@ -116,3 +116,4 @@ export function SkillsSection() {
     </section>
   )
 }
+
