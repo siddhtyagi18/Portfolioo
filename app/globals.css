@@ -80,11 +80,7 @@
 }
 
 .glass-card {
-  /* Use theme-aware subtle card background to keep contrast in light/dark */
-  /* Light: solid white with subtle tint for readability; Dark: kept darker */
-  background-color: rgba(255,255,255,0.92);
-  background-image: linear-gradient(180deg, rgba(243,245,255,0.6), rgba(255,250,255,0.75));
-  @apply dark:bg-[#0a0a0c]/80 backdrop-blur-md border border-border rounded-2xl shadow-xl transition-all duration-300;
+  @apply bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-xl transition-all duration-300;
 }
 
 /* Animated colorful blobs for hero */

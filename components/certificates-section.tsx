@@ -2,8 +2,7 @@
 
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion"
 import Image from "next/image"
-import { ExternalLink, X, ShieldCheck, Award, Sparkles } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { X, Award, Sparkles } from "lucide-react"
 import React, { useState, useEffect, useCallback, useRef } from "react"
 
 /* ───────────────────────── certificate data ───────────────────────── */
@@ -307,10 +306,7 @@ export function CertificatesSection() {
                         {/* Subtle bottom gradient for depth */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
 
-                        {/* Tiny verified badge — top right corner */}
-                        <div className="absolute top-2 right-2 p-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
-                          <ShieldCheck className="w-2.5 h-2.5" style={{ color: cert.color }} />
-                        </div>
+
                       </motion.div>
                     </TiltCard>
                   </motion.div>
@@ -359,106 +355,23 @@ export function CertificatesSection() {
               animate={{ scale: 1, y: 0, opacity: 1, filter: "blur(0px)" }}
               exit={{ scale: 0.92, y: 20, opacity: 0, filter: "blur(4px)" }}
               transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="relative w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row z-10 border border-white/8"
-              style={{
-                boxShadow: `0 0 60px ${activeCard.color}10, 0 20px 50px rgba(0,0,0,0.6)`,
-              }}
+              className="relative w-full max-w-5xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl z-10 bg-zinc-950"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Image section */}
-              <div className="relative w-full md:w-[62%] aspect-[4/3] md:aspect-auto md:min-h-[480px] bg-zinc-950">
+              <button
+                onClick={() => setActiveCard(null)}
+                className="absolute top-4 right-4 z-20 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-all text-white hover:rotate-90 duration-300 backdrop-blur-md"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="relative w-full aspect-[4/3] bg-zinc-950">
                 <Image
                   src={activeCard.src}
                   alt={activeCard.title}
                   fill
-                  className="object-contain p-6 md:p-10"
+                  className="object-contain p-4 md:p-8"
                 />
-                <div
-                  className="absolute top-0 left-0 w-32 h-32 opacity-15 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at 0% 0%, ${activeCard.color}, transparent 70%)`,
-                  }}
-                />
-              </div>
-
-              {/* Details section */}
-              <div className="w-full md:w-[38%] p-6 md:p-8 flex flex-col justify-between border-t md:border-t-0 md:border-l border-white/8 bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 backdrop-blur-2xl">
-                <div className="space-y-6">
-                  <button
-                    onClick={() => setActiveCard(null)}
-                    className="absolute top-4 right-4 p-2.5 bg-white/5 hover:bg-white/15 rounded-full transition-all text-white/50 hover:text-white hover:rotate-90 duration-300"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.3, type: "spring", stiffness: 400 }}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5" style={{ color: activeCard.color }} />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">
-                      Verified
-                    </span>
-                  </motion.div>
-
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
-                      {activeCard.title}
-                    </h2>
-                    <p className="text-lg font-semibold" style={{ color: activeCard.color }}>
-                      {activeCard.issuer}
-                    </p>
-                    <p className="text-white/35 text-sm mt-1 font-mono">
-                      Issued {activeCard.date}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <h4 className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-bold">
-                      Skills Validated
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {activeCard.tags.map((tag, i) => (
-                        <motion.span
-                          key={tag}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.4 + i * 0.1 }}
-                          className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-white/70 text-sm font-medium"
-                        >
-                          {tag}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="pt-8"
-                >
-                  <Button
-                    asChild
-                    className="w-full font-bold rounded-xl h-12 transition-all text-black"
-                    style={{
-                      backgroundColor: activeCard.color,
-                      boxShadow: `0 0 25px ${activeCard.color}30`,
-                    }}
-                  >
-                    <a
-                      href={activeCard.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2"
-                    >
-                      Verify Credential <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </Button>
-                </motion.div>
               </div>
             </motion.div>
           </motion.div>

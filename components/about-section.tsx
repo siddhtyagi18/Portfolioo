@@ -24,7 +24,7 @@ export function AboutSection() {
           
           <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
             <p>
-              I’m Siddh Tyagi, a B.Tech CSE (Data Science) student at Galgotias University passionate about building modern, scalable, and impactful digital experiences. I enjoy transforming ideas into real-world applications through clean code, problem solving, and intuitive design.
+              I’m Siddh Tyagi, a B.Tech CSE (Data Science) student at Galgotias University(2024-2028) passionate about building modern, scalable, and impactful digital experiences. I enjoy transforming ideas into real-world applications through clean code, problem solving, and intuitive design.
             </p>
             <p>
               Currently focused on Full Stack Development, Data Structures &amp; Algorithms, and AI-powered applications. I love exploring new technologies, participating in hackathons, and creating projects that combine innovation with practical utility.

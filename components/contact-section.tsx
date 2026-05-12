@@ -22,7 +22,7 @@ export function ContactSection() {
             Open to internships, collaborations, and exciting opportunities.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div className="space-y-10 pl-0 md:pl-10">
             <div className="space-y-8">
@@ -37,7 +37,7 @@ export function ContactSection() {
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-6">
                 <div className="h-12 w-12 rounded-full bg-background/5 dark:bg-white/5 border border-border flex items-center justify-center text-muted-foreground">
                   <Phone className="h-5 w-5" />
@@ -47,7 +47,7 @@ export function ContactSection() {
                   <p className="font-semibold text-foreground text-lg">+91 7017713557</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-6">
                 <div className="h-12 w-12 rounded-full bg-background/5 dark:bg-white/5 border border-border flex items-center justify-center text-muted-foreground">
                   <MapPin className="h-5 w-5" />
@@ -70,7 +70,7 @@ export function ContactSection() {
               </a>
             </div>
           </div>
-          
+
           <div className="bg-transparent">
             <ContactForm />
           </div>
@@ -90,12 +90,20 @@ function ContactForm() {
     e.preventDefault()
     setStatus('saving')
     try {
-      const res = await fetch('/api/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
       })
-      const data = await res.json()
+
+      const data = await response.json()
+
       if (data.ok) {
         setStatus('saved')
         setName('')
@@ -115,23 +123,23 @@ function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label htmlFor="name" className="text-sm font-semibold">Name</label>
-          <input id="name" type="text" value={name} onChange={e=>setName(e.target.value)} className="w-full h-12 rounded-xl border border-border bg-background/5 dark:bg-white/5 px-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-foreground placeholder:text-muted-foreground/50" placeholder="Your name" />
+          <input id="name" type="text" value={name} onChange={e => setName(e.target.value)} className="w-full h-12 rounded-xl border border-border bg-background/5 dark:bg-white/5 px-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-foreground placeholder:text-muted-foreground/50" placeholder="Your name" />
         </div>
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-semibold">Email</label>
-          <input id="email" type="email" value={email} onChange={e=>setEmail(e.target.value)} className="w-full h-12 rounded-xl border border-border bg-background/5 dark:bg-white/5 px-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-foreground placeholder:text-muted-foreground/50" placeholder="your@email.com" />
+          <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full h-12 rounded-xl border border-border bg-background/5 dark:bg-white/5 px-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-foreground placeholder:text-muted-foreground/50" placeholder="your@email.com" />
         </div>
       </div>
       <div className="space-y-2">
         <label htmlFor="message" className="text-sm font-semibold">Message</label>
-        <textarea id="message" value={message} onChange={e=>setMessage(e.target.value)} className="w-full min-h-[150px] rounded-xl border border-border bg-background/5 dark:bg-white/5 px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-foreground placeholder:text-muted-foreground/50 resize-y" placeholder="Tell me about your project or opportunity..." />
+        <textarea id="message" value={message} onChange={e => setMessage(e.target.value)} className="w-full min-h-[150px] rounded-xl border border-border bg-background/5 dark:bg-white/5 px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all text-foreground placeholder:text-muted-foreground/50 resize-y" placeholder="Tell me about your project or opportunity..." />
       </div>
       <div className="flex items-center gap-4">
         <Button type="submit" className="w-full h-12 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold text-base transition-colors flex items-center justify-center gap-2 shadow-lg">
           <Send className="h-4 w-4" /> Send Message
         </Button>
         {status === 'saving' && <div className="text-sm">Saving…</div>}
-        {status === 'saved' && <div className="text-sm text-emerald-600">Saved — added to contacts sheet.</div>}
+        {status === 'saved' && <div className="text-sm text-emerald-600">Saved </div>}
         {status === 'error' && <div className="text-sm text-destructive">Error saving. Try again.</div>}
       </div>
     </form>

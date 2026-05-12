@@ -8,6 +8,24 @@ export async function POST(request: Request) {
     const { name, email, message } = body
     if (!name || !email) return NextResponse.json({ ok: false, error: 'Missing fields' }, { status: 400 })
 
+    const googleScriptUrl = process.env.GOOGLE_SCRIPT_URL;
+
+    if (googleScriptUrl) {
+      // Send to Google Sheet via Apps Script Web App
+      const response = await fetch(googleScriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, timestamp: new Date().toISOString() })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save to Google Sheets');
+      }
+
+      return NextResponse.json({ ok: true });
+    }
+
+    // Fallback to local CSV if no Google Script URL is provided
     const dataDir = path.join(process.cwd(), 'data')
     if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir)
     const filePath = path.join(dataDir, 'contacts.csv')
